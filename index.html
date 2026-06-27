@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>الأجهزة الطبية والغير طبية</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B3A5C;--blue:#2563EB;--teal:#0D9488;--light:#F0F6FF;--gray:#64748B;--border:#CBD5E1;--good:#16A34A;--fair:#D97706;--bad:#DC2626;--shadow:0 2px 12px rgba(27,58,92,.10)}
+body{font-family:'Cairo',sans-serif;background:#EEF4FB;color:#1E293B;min-height:100vh}
+header{background:linear-gradient(135deg,#1B3A5C 0%,#2563EB 100%);color:white;padding:14px 18px;display:flex;align-items:center;gap:12px;box-shadow:0 3px 16px rgba(27,58,92,.25);position:sticky;top:0;z-index:100}
+.logo{width:42px;height:42px;background:rgba(255,255,255,.15);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px}
+header h1{font-size:16px;font-weight:700}
+header p{font-size:11px;opacity:.75}
+.hst{margin-right:auto;display:flex;gap:10px}
+.hs{text-align:center;background:rgba(255,255,255,.12);padding:5px 12px;border-radius:8px}
+.hs .n{font-size:17px;font-weight:900}.hs .l{font-size:10px;opacity:.8}
+.wrap{max-width:1200px;margin:0 auto;padding:16px 14px}
+.btn{padding:9px 15px;border:none;border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .2s;white-space:nowrap}
+.btn-blue{background:var(--blue);color:white}.btn-blue:hover{background:#1d4ed8}
+.btn-teal{background:var(--teal);color:white}.btn-teal:hover{background:#0f766e}
+.btn-red{background:var(--bad);color:white}
+.btn-orange{background:var(--fair);color:white}
+.btn-out{background:white;color:var(--navy);border:2px solid var(--border)}.btn-out:hover{border-color:var(--blue);color:var(--blue)}
+.btn-sm{padding:6px 11px;font-size:12px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.top-bar{background:white;border-radius:14px;padding:13px;margin-bottom:13px;box-shadow:var(--shadow);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.top-bar label{font-weight:700;font-size:14px;color:var(--navy);white-space:nowrap}
+.sel-h{flex:1;min-width:180px;padding:9px 13px;border:2px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:14px;color:var(--navy);background:var(--light);outline:none;cursor:pointer}
+.sel-h:focus{border-color:var(--blue)}
+/* BEDS CARD */
+.beds-card{background:white;border-radius:14px;padding:14px;margin-bottom:13px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.beds-card h3{font-size:14px;font-weight:700;color:var(--navy);white-space:nowrap}
+.bed-input{display:flex;flex-direction:column;gap:3px}
+.bed-input label{font-size:11px;color:var(--gray);font-weight:600}
+.bed-input input{width:90px;padding:7px 10px;border:2px solid var(--border);border-radius:8px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;color:var(--navy);outline:none;text-align:center}
+.bed-input input:focus{border-color:var(--blue)}
+.beds-save{margin-right:auto}
+/* CAT TABS */
+.cat-tabs{display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap}
+.ct{padding:8px 16px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:white;color:var(--gray);transition:all .2s}
+.ct:hover{border-color:var(--blue);color:var(--blue)}.ct.on{background:var(--navy);color:white;border-color:var(--navy)}
+/* SUB TABS */
+.sub-tabs{display:flex;gap:6px;margin-bottom:11px;flex-wrap:wrap}
+.stt{padding:7px 12px;border-radius:8px;font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;border:2px solid var(--border);background:white;color:var(--gray);transition:all .2s}
+.stt:hover{border-color:var(--teal);color:var(--teal)}.stt.on{background:var(--teal);color:white;border-color:var(--teal)}
+/* SUMMARY */
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:9px;margin-bottom:13px}
+.sc{background:white;border-radius:12px;padding:12px;text-align:center;box-shadow:var(--shadow);border-top:4px solid var(--blue)}
+.sc.g{border-top-color:var(--good)}.sc.f{border-top-color:var(--fair)}.sc.b{border-top-color:var(--bad)}
+.sc .n{font-size:22px;font-weight:900;color:var(--navy)}.sc .l{font-size:11px;color:var(--gray);margin-top:2px}
+/* TOOLBAR */
+.toolbar{display:flex;gap:9px;margin-bottom:13px;flex-wrap:wrap}
+.toolbar input,.toolbar select{padding:9px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;outline:none;background:white}
+.toolbar input{flex:1;min-width:140px}.toolbar input:focus,.toolbar select:focus{border-color:var(--blue)}
+/* REPORT BAR */
+.report-bar{display:flex;gap:8px;margin-bottom:13px;flex-wrap:wrap}
+/* GRID */
+.egrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:13px}
+/* CARD */
+.ecard{background:white;border-radius:14px;box-shadow:var(--shadow);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.ecard:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(27,58,92,.14)}
+.cph{width:100%;height:145px;background:var(--light);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.cph img{width:100%;height:100%;object-fit:cover}
+.cph .phi{font-size:42px;color:var(--border)}
+.phc{position:absolute;bottom:7px;left:7px;background:rgba(0,0,0,.6);color:white;font-size:11px;font-weight:700;padding:3px 7px;border-radius:6px}
+.bs{position:absolute;top:8px;left:8px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700;color:white}
+.bc{position:absolute;top:8px;right:8px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(27,58,92,.75);color:white}
+.s-شغال{background:var(--good)}.s-صيانة{background:var(--fair)}.s-تهكين{background:var(--bad)}.s-خارج-الخدمة{background:#6B7280}
+.cbody{padding:12px}
+.cbody h3{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:7px}
+.cmeta{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:7px}
+.mi{font-size:11px;color:var(--gray)}.mi span{font-weight:700;color:#1E293B}
+.creason{font-size:11px;color:#92400E;background:#FFF7ED;padding:6px 8px;border-radius:7px;margin-bottom:7px;border-right:3px solid var(--fair)}
+.cacts{display:flex;gap:6px}
+.cacts .btn{flex:1;justify-content:center;padding:7px;font-size:11px}
+.empty{text-align:center;padding:50px 20px;color:var(--gray);grid-column:1/-1}
+.empty .ei{font-size:48px;margin-bottom:10px}
+.empty p{font-size:14px;font-weight:600}
+.no-hosp{text-align:center;padding:80px 20px;color:var(--gray)}
+.no-hosp .ei{font-size:60px;margin-bottom:14px}
+.no-hosp h2{font-size:18px;font-weight:700;color:var(--navy);margin-bottom:7px}
+/* MODAL */
+.ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;align-items:flex-start;justify-content:center;padding:14px;overflow-y:auto}
+.ov.on{display:flex}
+.modal{background:white;border-radius:18px;width:100%;max-width:540px;padding:22px;box-shadow:0 20px 60px rgba(0,0,0,.3);margin:auto}
+.modal h2{font-size:17px;font-weight:900;color:var(--navy);margin-bottom:16px}
+.fg{margin-bottom:13px}
+.fg label{display:block;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.fg input,.fg select,.fg textarea{width:100%;padding:10px 12px;border:2px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;color:#1E293B;outline:none;transition:border-color .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue)}
+.fg textarea{min-height:70px;resize:vertical}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rbox{display:none;background:#FFF7ED;border:2px solid #FED7AA;border-radius:10px;padding:12px;margin-bottom:13px}
+.rbox label{display:block;font-size:12px;font-weight:700;color:#92400E;margin-bottom:5px}
+.rbox textarea{width:100%;padding:9px 12px;border:2px solid #FED7AA;border-radius:8px;font-family:'Cairo',sans-serif;font-size:13px;outline:none;min-height:65px;resize:vertical;background:white}
+/* PHOTOS UPLOAD */
+.pua{border:2px dashed var(--border);border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;background:var(--light)}
+.pua:hover{border-color:var(--blue);background:#EFF6FF}
+.pua .pi{font-size:28px;margin-bottom:5px}
+.pua p{font-size:12px;color:var(--gray)}
+.phpr{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.pht{position:relative;width:78px;height:78px;flex-shrink:0}
+.pht img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block}
+.pht .dp{position:absolute;top:-6px;right:-6px;background:var(--bad);color:white;border:none;border-radius:50%;width:20px;height:20px;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1}
+.macts{display:flex;gap:10px;margin-top:16px}
+.macts .btn{flex:1;justify-content:center}
+/* VIEW */
+.vph{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.vph img{height:140px;border-radius:10px;object-fit:cover;cursor:zoom-in;flex:1;min-width:110px;max-width:100%}
+.vi{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:13px}
+.vii{background:var(--light);padding:10px;border-radius:10px}
+.vii .k{font-size:10px;color:var(--gray);margin-bottom:3px}
+.vii .v{font-size:14px;font-weight:700;color:var(--navy)}
+.vii.full{grid-column:1/-1}
+.vii.rsn{background:#FFF7ED;grid-column:1/-1}
+.vii.rsn .k{color:#92400E}
+/* ZOOM */
+.zoom-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:400;align-items:center;justify-content:center;cursor:zoom-out}
+.zoom-ov.on{display:flex}
+.zoom-ov img{max-width:95vw;max-height:95vh;border-radius:10px}
+/* HOSP ITEM */
+.hi{display:flex;align-items:center;gap:8px;background:#F8FAFC;padding:10px 12px;border-radius:10px;border:1px solid #E2E8F0}
+.hi span{flex:1;font-size:13px;font-weight:600}
+.hi small{font-size:11px;color:var(--gray)}
+.hi button{background:#FEE2E2;color:var(--bad);border:none;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-family:'Cairo',sans-serif}
+/* DEVICE MANAGE */
+.dev-item{display:flex;align-items:center;gap:8px;background:#F8FAFC;padding:8px 12px;border-radius:10px;border:1px solid #E2E8F0;margin-bottom:6px}
+.dev-item span{flex:1;font-size:13px}
+.dev-item button{background:#FEE2E2;color:var(--bad);border:none;padding:3px 9px;border-radius:6px;cursor:pointer;font-size:12px;font-family:'Cairo',sans-serif}
+@media(max-width:600px){.hst{display:none}.frow{grid-template-columns:1fr}.vi{grid-template-columns:1fr}.summary{grid-template-columns:repeat(2,1fr)}.beds-card{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">⚕️</div>
+  <div><h1>الأجهزة الطبية والغير طبية</h1><p>الأمانة العامة للصحة النفسية وعلاج الإدمان</p></div>
+  <div class="hst">
+    <div class="hs"><div class="n" id="ht">0</div><div class="l">إجمالي الأجهزة</div></div>
+    <div class="hs"><div class="n" id="hh">0</div><div class="l">مستشفى</div></div>
+  </div>
+</header>
+
+<div class="wrap">
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <label>🏥</label>
+    <select class="sel-h" id="hsel" onchange="selH()"><option value="">-- اختر مستشفى --</option></select>
+    <button class="btn btn-out btn-sm" onclick="openHM()">⚙️ المستشفيات</button>
+    <button class="btn btn-out btn-sm" onclick="openDevM()">📋 الأجهزة</button>
+    <button class="btn btn-blue btn-sm" id="btnadd" onclick="openAdd()" disabled>＋ إضافة جهاز</button>
+  </div>
+
+  <div class="no-hosp" id="noh"><div class="ei">🏥</div><h2>اختر مستشفى للبدء</h2><p>اختر مستشفى من القائمة أعلاه لعرض أجهزتها</p></div>
+
+  <div id="con" style="display:none">
+    <!-- BEDS -->
+    <div class="beds-card">
+      <h3>🛏️ الأسرة:</h3>
+      <div class="bed-input"><label>الأساسية</label><input type="number" id="b-base" min="0" placeholder="0"></div>
+      <div class="bed-input"><label>التشغيلية</label><input type="number" id="b-oper" min="0" placeholder="0"></div>
+      <button class="btn btn-teal btn-sm beds-save" onclick="saveBeds()">💾 حفظ الأسرة</button>
+      <div id="beds-saved" style="font-size:12px;color:var(--good);display:none">✅ تم الحفظ</div>
+    </div>
+
+    <!-- REPORTS -->
+    <div class="report-bar">
+      <button class="btn btn-orange btn-sm" onclick="genReport('صيانة')">🔧 تقرير الصيانة PDF</button>
+      <button class="btn btn-red btn-sm" onclick="genReport('تهكين')">🗑️ تقرير التهكين PDF</button>
+      <button class="btn btn-teal btn-sm" onclick="expCSV()">📥 تصدير Excel</button>
+    </div>
+
+    <!-- CAT TABS -->
+    <div class="cat-tabs">
+      <div class="ct on" data-c="طبي" onclick="selCat('طبي')">🩺 طبي</div>
+      <div class="ct" data-c="غير طبي" onclick="selCat('غير طبي')">🔧 غير طبي</div>
+    </div>
+    <div class="sub-tabs" id="subs">
+      <div class="stt on" data-s="الكل" onclick="selSub('الكل')">الكل</div>
+      <div class="stt" data-s="عام" onclick="selSub('عام')">🏥 عام</div>
+      <div class="stt" data-s="معمل" onclick="selSub('معمل')">🔬 معمل</div>
+      <div class="stt" data-s="أسنان" onclick="selSub('أسنان')">🦷 أسنان</div>
+      <div class="stt" data-s="رمد" onclick="selSub('رمد')">👁️ رمد</div>
+      <div class="stt" data-s="أشعة" onclick="selSub('أشعة')">☢️ أشعة</div>
+      <div class="stt" data-s="علاج طبيعي" onclick="selSub('علاج طبيعي')">🏃 علاج طبيعي</div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="summary">
+      <div class="sc"><div class="n" id="s-t">0</div><div class="l">أصناف</div></div>
+      <div class="sc"><div class="n" id="s-u">0</div><div class="l">وحدات</div></div>
+      <div class="sc g"><div class="n" id="s-g">0</div><div class="l">شغال</div></div>
+      <div class="sc f"><div class="n" id="s-f">0</div><div class="l">صيانة</div></div>
+      <div class="sc b"><div class="n" id="s-b">0</div><div class="l">تهكين</div></div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="toolbar">
+      <input type="text" id="srch" placeholder="🔍 بحث عن جهاز..." oninput="render()">
+      <select id="fst" onchange="render()">
+        <option value="">كل الحالات</option>
+        <option>شغال</option><option>صيانة</option><option>تهكين</option><option>خارج الخدمة</option>
+      </select>
+    </div>
+    <div class="egrid" id="grid"></div>
+  </div>
+</div>
+
+<!-- ADD/EDIT MODAL -->
+<div class="ov" id="madd">
+  <div class="modal">
+    <h2 id="mtitle">➕ إضافة جهاز</h2>
+    <div class="fg">
+      <label>اسم الجهاز *</label>
+      <select id="fn-sel" onchange="onDevSel()"><option value="">-- اختر جهاز --</option></select>
+    </div>
+    <div class="fg" id="fn-custom-wrap" style="display:none">
+      <label>أو اكتب اسم جهاز جديد</label>
+      <input type="text" id="fn-custom" placeholder="اسم الجهاز">
+    </div>
+    <div class="frow">
+      <div class="fg"><label>التصنيف *</label><select id="fc" onchange="togSub()"><option value="طبي">🩺 طبي</option><option value="غير طبي">🔧 غير طبي</option></select></div>
+      <div class="fg" id="sw"><label>القسم *</label><select id="fsub"><option value="عام">🏥 عام</option><option value="معمل">🔬 معمل</option><option value="أسنان">🦷 أسنان</option><option value="رمد">👁️ رمد</option><option value="أشعة">☢️ أشعة</option><option value="علاج طبيعي">🏃 علاج طبيعي</option></select></div>
+    </div>
+    <div class="frow">
+      <div class="fg"><label>العدد *</label><input type="number" id="fct" min="1" placeholder="0"></div>
+      <div class="fg"><label>الحالة *</label><select id="fsa" onchange="togReason()"><option>شغال</option><option>صيانة</option><option>تهكين</option><option>خارج الخدمة</option></select></div>
+    </div>
+    <div class="rbox" id="rbox">
+      <label id="rlbl">📝 سبب الصيانة</label>
+      <textarea id="freason" placeholder="اكتب السبب..."></textarea>
+    </div>
+    <div class="fg"><label>الموديل / الماركة</label><input type="text" id="fm" placeholder="مثال: Philips, Siemens..."></div>
+    <div class="fg">
+      <label>الصور</label>
+      <div class="pua" id="pua-btn" onclick="document.getElementById('fp').click()">
+        <input type="file" id="fp" accept="image/*" multiple style="display:none">
+        <div class="pi">📷</div>
+        <p>اضغط لاختيار صورة أو أكثر من الجهاز أو الكاميرا</p>
+      </div>
+      <div class="phpr" id="phpr"></div>
+    </div>
+    <div class="fg"><label>ملاحظات</label><textarea id="fno" placeholder="أي ملاحظات..."></textarea></div>
+    <div class="macts">
+      <button class="btn btn-blue" onclick="saveE()">💾 حفظ</button>
+      <button class="btn btn-out" onclick="closeM('madd')">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<!-- VIEW MODAL -->
+<div class="ov" id="mview">
+  <div class="modal">
+    <h2 id="vn"></h2>
+    <div class="vph" id="vphotos"></div>
+    <div class="vi">
+      <div class="vii"><div class="k">التصنيف</div><div class="v" id="vc"></div></div>
+      <div class="vii"><div class="k">القسم</div><div class="v" id="vs"></div></div>
+      <div class="vii"><div class="k">العدد</div><div class="v" id="vct"></div></div>
+      <div class="vii"><div class="k">الحالة</div><div class="v" id="vst"></div></div>
+      <div class="vii full"><div class="k">الموديل / الماركة</div><div class="v" id="vm"></div></div>
+      <div class="vii rsn" id="vrsw"><div class="k" id="vrsk">سبب الصيانة</div><div class="v" id="vrs"></div></div>
+      <div class="vii full" id="vnw"><div class="k">ملاحظات</div><div class="v" id="vno"></div></div>
+    </div>
+    <div class="macts">
+      <button class="btn btn-blue" onclick="efv()">✏️ تعديل</button>
+      <button class="btn btn-red" onclick="dfv()">🗑️ حذف</button>
+      <button class="btn btn-out" onclick="closeM('mview')">إغلاق</button>
+    </div>
+  </div>
+</div>
+
+<!-- HOSPITALS MODAL -->
+<div class="ov" id="mh">
+  <div class="modal">
+    <h2>⚙️ إدارة المستشفيات</h2>
+    <div class="fg"><label>إضافة مستشفى جديدة</label>
+      <div style="display:flex;gap:8px"><input type="text" id="nh" placeholder="اسم المستشفى" style="flex:1"><button class="btn btn-blue btn-sm" onclick="addH()">إضافة</button></div>
+    </div>
+    <div id="hl" style="display:flex;flex-direction:column;gap:7px;max-height:340px;overflow-y:auto;margin-top:10px"></div>
+    <div class="macts"><button class="btn btn-out" onclick="closeM('mh')">إغلاق</button></div>
+  </div>
+</div>
+
+<!-- DEVICES MANAGE MODAL -->
+<div class="ov" id="mdev">
+  <div class="modal">
+    <h2>📋 إدارة قائمة الأجهزة</h2>
+    <div class="fg"><label>إضافة جهاز للقائمة</label>
+      <div style="display:flex;gap:8px;margin-bottom:8px">
+        <input type="text" id="nd-name" placeholder="اسم الجهاز" style="flex:1">
+        <select id="nd-sub" style="padding:9px 10px;border:2px solid var(--border);border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;outline:none">
+          <option value="عام">🏥 عام</option><option value="معمل">🔬 معمل</option><option value="أسنان">🦷 أسنان</option><option value="رمد">👁️ رمد</option><option value="أشعة">☢️ أشعة</option><option value="علاج طبيعي">🏃 علاج طبيعي</option><option value="غير طبي">🔧 غير طبي</option>
+        </select>
+        <button class="btn btn-blue btn-sm" onclick="addDev()">إضافة</button>
+      </div>
+    </div>
+    <div id="devlist" style="max-height:360px;overflow-y:auto"></div>
+    <div class="macts"><button class="btn btn-out" onclick="closeM('mdev')">إغلاق</button></div>
+  </div>
+</div>
+
+<!-- IMAGE ZOOM -->
+<div class="zoom-ov" id="zoom" onclick="document.getElementById('zoom').classList.remove('on')">
+  <img id="zoom-img">
+</div>
+
+<script>
+// ── DATA ──
+let db = JSON.parse(localStorage.getItem('eq5') || '{"hospitals":[],"items":{},"beds":{},"devices":[]}');
+let cH='', cC='طبي', cS='الكل', eId=null, vId=null, cPhs=[];
+
+const DEF_HS = ['العباسية للصحة النفسية','الخانكة للصحة النفسية','مصر الجديدة للصحة النفسية','حلوان للصحة النفسية','المعمورة للصحة النفسية','اسوان للصحة النفسية','سوهاج للصحة النفسية','اسيوط للصحة النفسية','المنيا للصحة النفسية','بني سويف للصحة النفسية','دمياط للصحة النفسية','شبين الكوم للصحة النفسية','الدميرة للصحة النفسية','بنها للصحة النفسية','العزازي للصحة النفسية','طنطا للصحة النفسية','مركز عباس حلمي','مركز علوان لعلاج الادمان','مركز شبراقاص','ميت سراج لعلاج الإدمان'];
+
+const DEF_DEVS = [
+  {name:'سماعة طبية للبالغين',sub:'عام'},{name:'سماعة طبية للأطفال',sub:'عام'},
+  {name:'جهاز قياس ضغط الدم',sub:'عام'},{name:'ميزان حرارة',sub:'عام'},
+  {name:'جهاز قياس الأكسجين',sub:'عام'},{name:'جهاز البخار',sub:'عام'},
+  {name:'جهاز تخطيط القلب ECG',sub:'عام'},{name:'جهاز تخطيط المخ EEG',sub:'عام'},
+  {name:'جهاز التخدير',sub:'عام'},{name:'مونيتور مرضى',sub:'عام'},
+  {name:'جهاز صدمة كهربائية',sub:'عام'},{name:'سرير العناية المركزة ICU',sub:'عام'},
+  {name:'مرتبة هوائية',sub:'عام'},{name:'أوتوكلاف',sub:'عام'},
+  {name:'جهاز شفط طوارئ',sub:'عام'},{name:'جهاز تنفس اصطناعي',sub:'عام'},
+  {name:'عربة الأدوية',sub:'عام'},{name:'غسالة المطهرات',sub:'عام'},
+  {name:'ميكروسكوب',sub:'معمل'},{name:'جهاز كيمياء الدم أوتوماتيك',sub:'معمل'},
+  {name:'جهاز كيمياء يدوي',sub:'معمل'},{name:'سنترفيوج',sub:'معمل'},
+  {name:'حضانة معمل',sub:'معمل'},{name:'ميكروبيبت ثابت',sub:'معمل'},
+  {name:'ميكروبيبت متحرك',sub:'معمل'},{name:'وحدة تنقية مياه',sub:'معمل'},
+  {name:'ميزان حساس',sub:'معمل'},{name:'جهاز فورتكس',sub:'معمل'},
+  {name:'وحدة طب الأسنان',sub:'أسنان'},{name:'جهاز أشعة أسنان',sub:'أسنان'},
+  {name:'بانوراما أسنان',sub:'أسنان'},{name:'جهاز تصليد ضوئي',sub:'أسنان'},
+  {name:'Apex Locator',sub:'أسنان'},
+  {name:'مصباح الشق Slit Lamp',sub:'رمد'},{name:'جهاز قياس النظر',sub:'رمد'},
+  {name:'OCT',sub:'رمد'},{name:'جهاز ضغط العين',sub:'رمد'},
+  {name:'جهاز أشعة X عام',sub:'أشعة'},{name:'جهاز الموجات فوق الصوتية',sub:'أشعة'},
+  {name:'جهاز TENS',sub:'علاج طبيعي'},{name:'جهاز EMS',sub:'علاج طبيعي'},
+  {name:'جهاز موجات علاجية',sub:'علاج طبيعي'},{name:'سرير علاج طبيعي',sub:'علاج طبيعي'},
+  {name:'دراجة تمارين',sub:'علاج طبيعي'},{name:'جهاز مشي Treadmill',sub:'علاج طبيعي'},
+  {name:'جهاز ليزر علاجي',sub:'علاج طبيعي'},{name:'عجلة الكتف',sub:'علاج طبيعي'},
+  {name:'سلم حائط',sub:'علاج طبيعي'},{name:'كرسى تمارين رباعية',sub:'علاج طبيعي'},
+  {name:'كمبيوتر',sub:'غير طبي'},{name:'طابعة',sub:'غير طبي'},
+  {name:'تكييف',sub:'غير طبي'},{name:'ثلاجة',sub:'غير طبي'},
+  {name:'مولد كهرباء',sub:'غير طبي'},{name:'سخان مياه',sub:'غير طبي'},
+];
+
+function sv(){localStorage.setItem('eq5',JSON.stringify(db))}
+
+function init(){
+  if(!db.hospitals.length){db.hospitals=[...DEF_HS];sv()}
+  if(!db.devices.length){db.devices=[...DEF_DEVS];sv()}
+  rHS(); updH(); fillDevSel();
+}
+
+function rHS(){
+  const s=document.getElementById('hsel'),v=s.value;
+  s.innerHTML='<option value="">-- اختر مستشفى --</option>';
+  db.hospitals.forEach(h=>{const o=document.createElement('option');o.value=h;o.textContent=h;if(h===v)o.selected=true;s.appendChild(o)});
+}
+
+function updH(){
+  let t=0; Object.values(db.items).forEach(a=>t+=a.length);
+  document.getElementById('ht').textContent=t;
+  document.getElementById('hh').textContent=db.hospitals.length;
+}
+
+function fillDevSel(){
+  const s=document.getElementById('fn-sel');
+  s.innerHTML='<option value="">-- اختر جهاز --</option>';
+  db.devices.forEach(d=>{const o=document.createElement('option');o.value=d.name;o.dataset.sub=d.sub;o.textContent=d.name+' ('+d.sub+')';s.appendChild(o)});
+  s.innerHTML+='<option value="__custom__">＋ جهاز غير موجود في القائمة</option>';
+}
+
+function onDevSel(){
+  const s=document.getElementById('fn-sel');
+  const v=s.value;
+  const cw=document.getElementById('fn-custom-wrap');
+  if(v==='__custom__'){cw.style.display='block';document.getElementById('fn-custom').value='';return}
+  cw.style.display='none';
+  if(v){
+    const opt=s.options[s.selectedIndex];
+    const sub=opt.dataset.sub;
+    if(sub==='غير طبي'){document.getElementById('fc').value='غير طبي'}
+    else{document.getElementById('fc').value='طبي';document.getElementById('fsub').value=sub}
+    togSub();
+  }
+}
+
+function selH(){
+  cH=document.getElementById('hsel').value;
+  document.getElementById('btnadd').disabled=!cH;
+  document.getElementById('noh').style.display=cH?'none':'block';
+  document.getElementById('con').style.display=cH?'block':'none';
+  if(cH){
+    if(!db.items[cH])db.items[cH]=[];
+    const beds=db.beds[cH]||{base:0,oper:0};
+    document.getElementById('b-base').value=beds.base||'';
+    document.getElementById('b-oper').value=beds.oper||'';
+    document.getElementById('beds-saved').style.display='none';
+    render();
+  }
+}
+
+function saveBeds(){
+  if(!cH)return;
+  if(!db.beds)db.beds={};
+  db.beds[cH]={base:parseInt(document.getElementById('b-base').value)||0,oper:parseInt(document.getElementById('b-oper').value)||0};
+  sv();
+  const msg=document.getElementById('beds-saved');
+  msg.style.display='block';
+  setTimeout(()=>msg.style.display='none',2000);
+}
+
+function selCat(c){
+  cC=c; cS='الكل';
+  document.querySelectorAll('.ct').forEach(t=>t.classList.toggle('on',t.dataset.c===c));
+  document.getElementById('subs').style.display=c==='طبي'?'flex':'none';
+  document.querySelectorAll('.stt').forEach(t=>t.classList.toggle('on',t.dataset.s==='الكل'));
+  render();
+}
+
+function selSub(s){
+  cS=s;
+  document.querySelectorAll('.stt').forEach(t=>t.classList.toggle('on',t.dataset.s===s));
+  render();
+}
+
+function gf(){
+  const items=db.items[cH]||[];
+  const sr=document.getElementById('srch').value.toLowerCase();
+  const fs=document.getElementById('fst').value;
+  return items.filter(i=>{
+    if(i.cat!==cC)return false;
+    if(cC==='طبي'&&cS!=='الكل'&&i.sub!==cS)return false;
+    if(sr&&!i.name.toLowerCase().includes(sr)&&!(i.model||'').toLowerCase().includes(sr))return false;
+    if(fs&&i.status!==fs)return false;
+    return true;
+  });
+}
+
+function render(){
+  const items=gf();
+  document.getElementById('s-t').textContent=items.length;
+  document.getElementById('s-u').textContent=items.reduce((s,i)=>s+(parseInt(i.count)||0),0);
+  document.getElementById('s-g').textContent=items.filter(i=>i.status==='شغال').length;
+  document.getElementById('s-f').textContent=items.filter(i=>i.status==='صيانة').length;
+  document.getElementById('s-b').textContent=items.filter(i=>i.status==='تهكين'||i.status==='خارج الخدمة').length;
+  const g=document.getElementById('grid');
+  if(!items.length){g.innerHTML=`<div class="empty"><div class="ei">${cC==='طبي'?'🩺':'🔧'}</div><p>لا توجد أجهزة في هذا القسم</p></div>`;return}
+  g.innerHTML=items.map(i=>{
+    const sc='s-'+i.status.replace(/ /g,'-');
+    const lbl=i.cat==='طبي'?i.sub:'غير طبي';
+    const firstPh=i.photos&&i.photos.length?i.photos[0]:null;
+    const phCount=i.photos&&i.photos.length>1?`<span class="phc">📷 ${i.photos.length}</span>`:'';
+    return`<div class="ecard" onclick="viewE('${i.id}')">
+      <div class="cph">
+        ${firstPh?`<img src="${firstPh}" alt="${i.name}">`:'<div class="phi">🏥</div>'}
+        <span class="bs ${sc}">${i.status}</span>
+        <span class="bc">${lbl}</span>
+        ${phCount}
+      </div>
+      <div class="cbody">
+        <h3>${i.name}</h3>
+        <div class="cmeta">
+          <div class="mi">العدد: <span>${i.count}</span></div>
+          <div class="mi">الموديل: <span>${i.model||'—'}</span></div>
+        </div>
+        ${i.reason?`<div class="creason">📝 ${i.reason}</div>`:''}
+        <div class="cacts">
+          <button class="btn btn-out" onclick="event.stopPropagation();editE('${i.id}')">✏️ تعديل</button>
+          <button class="btn btn-red" onclick="event.stopPropagation();delE('${i.id}')">🗑️ حذف</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── ADD/EDIT ──
+function openAdd(){
+  eId=null; cPhs=[];
+  document.getElementById('mtitle').textContent='➕ إضافة جهاز';
+  document.getElementById('fn-sel').value='';
+  document.getElementById('fn-custom').value='';
+  document.getElementById('fn-custom-wrap').style.display='none';
+  document.getElementById('fc').value=cC;
+  document.getElementById('fsub').value=cS!=='الكل'?cS:'عام';
+  document.getElementById('fct').value='';
+  document.getElementById('fsa').value='شغال';
+  document.getElementById('fm').value='';
+  document.getElementById('fno').value='';
+  document.getElementById('freason').value='';
+  document.getElementById('phpr').innerHTML='';
+  togSub(); togReason();
+  document.getElementById('madd').classList.add('on');
+}
+
+function editE(id){
+  const i=(db.items[cH]||[]).find(x=>x.id===id); if(!i)return;
+  eId=id; cPhs=[...(i.photos||[])];
+  document.getElementById('mtitle').textContent='✏️ تعديل الجهاز';
+  document.getElementById('fn-sel').value=i.name;
+  if(!document.getElementById('fn-sel').value){
+    document.getElementById('fn-sel').value='__custom__';
+    document.getElementById('fn-custom-wrap').style.display='block';
+    document.getElementById('fn-custom').value=i.name;
+  } else document.getElementById('fn-custom-wrap').style.display='none';
+  document.getElementById('fc').value=i.cat;
+  document.getElementById('fsub').value=i.sub||'عام';
+  document.getElementById('fct').value=i.count;
+  document.getElementById('fsa').value=i.status;
+  document.getElementById('fm').value=i.model||'';
+  document.getElementById('fno').value=i.notes||'';
+  document.getElementById('freason').value=i.reason||'';
+  renderPh();
+  togSub(); togReason();
+  document.getElementById('mview').classList.remove('on');
+  document.getElementById('madd').classList.add('on');
+}
+
+function togSub(){
+  document.getElementById('sw').style.display=document.getElementById('fc').value==='طبي'?'block':'none';
+}
+
+function togReason(){
+  const st=document.getElementById('fsa').value;
+  const rb=document.getElementById('rbox');
+  if(st==='صيانة'||st==='تهكين'){
+    rb.style.display='block';
+    document.getElementById('rlbl').textContent=st==='صيانة'?'📝 سبب الصيانة':'📝 سبب التهكين';
+  } else rb.style.display='none';
+}
+
+// ── PHOTOS ──
+document.getElementById('fp').addEventListener('change',function(){
+  Array.from(this.files).forEach(f=>{
+    const r=new FileReader();
+    r.onload=e=>{cPhs.push(e.target.result);renderPh()};
+    r.readAsDataURL(f);
+  });
+  this.value='';
+});
+
+function renderPh(){
+  document.getElementById('phpr').innerHTML=cPhs.map((p,i)=>`
+    <div class="pht">
+      <img src="${p}" alt="صورة ${i+1}">
+      <button class="dp" onclick="rmPh(${i})">×</button>
+    </div>`).join('');
+}
+
+function rmPh(i){cPhs.splice(i,1);renderPh();}
+
+function saveE(){
+  const selV=document.getElementById('fn-sel').value;
+  const name=selV==='__custom__'?document.getElementById('fn-custom').value.trim():selV;
+  const ct=document.getElementById('fct').value;
+  if(!name){alert('يرجى اختيار أو كتابة اسم الجهاز');return}
+  if(!ct){alert('يرجى إدخال العدد');return}
+  const cat=document.getElementById('fc').value;
+  const sub=cat==='طبي'?document.getElementById('fsub').value:'—';
+  const st=document.getElementById('fsa').value;
+  const item={name,cat,sub,count:parseInt(ct),status:st,
+    model:document.getElementById('fm').value.trim(),
+    notes:document.getElementById('fno').value.trim(),
+    reason:(st==='صيانة'||st==='تهكين')?document.getElementById('freason').value.trim():'',
+    photos:[...cPhs]};
+  if(!db.items[cH])db.items[cH]=[];
+  if(eId){
+    const idx=db.items[cH].findIndex(i=>i.id===eId);
+    if(idx!==-1)db.items[cH][idx]={...db.items[cH][idx],...item};
+  } else {
+    db.items[cH].push({id:Date.now().toString(),date:new Date().toLocaleDateString('ar-EG'),...item});
+  }
+  sv(); updH(); render(); closeM('madd');
+}
+
+function delE(id){
+  if(!confirm('هل تريد حذف هذا الجهاز؟'))return;
+  db.items[cH]=(db.items[cH]||[]).filter(i=>i.id!==id);
+  sv(); updH(); render();
+}
+
+// ── VIEW ──
+function viewE(id){
+  vId=id;
+  const i=(db.items[cH]||[]).find(x=>x.id===id); if(!i)return;
+  document.getElementById('vn').textContent=i.name;
+  document.getElementById('vc').textContent=i.cat;
+  document.getElementById('vs').textContent=i.sub||'—';
+  document.getElementById('vct').textContent=i.count+' وحدة';
+  document.getElementById('vst').textContent=i.status;
+  document.getElementById('vm').textContent=i.model||'—';
+  document.getElementById('vno').textContent=i.notes||'—';
+  document.getElementById('vnw').style.display=i.notes?'block':'none';
+  const rw=document.getElementById('vrsw');
+  if(i.reason){
+    rw.style.display='block';
+    document.getElementById('vrsk').textContent=i.status==='صيانة'?'سبب الصيانة':'سبب التهكين';
+    document.getElementById('vrs').textContent=i.reason;
+  } else rw.style.display='none';
+  const vph=document.getElementById('vphotos');
+  if(i.photos&&i.photos.length){
+    vph.innerHTML=i.photos.map(p=>`<img src="${p}" onclick="zoomImg('${p}')" alt="صورة">`).join('');
+    vph.style.display='flex';
+  } else vph.style.display='none';
+  document.getElementById('mview').classList.add('on');
+}
+function efv(){editE(vId)}
+function dfv(){delE(vId);closeM('mview')}
+
+// ── ZOOM ──
+function zoomImg(src){
+  document.getElementById('zoom-img').src=src;
+  document.getElementById('zoom').classList.add('on');
+}
+
+// ── HOSPITALS ──
+function openHM(){rHL();document.getElementById('mh').classList.add('on')}
+function rHL(){
+  document.getElementById('hl').innerHTML=db.hospitals.map(h=>`
+    <div class="hi">
+      <span>${h}</span>
+      <small>${(db.items[h]||[]).length} جهاز</small>
+      <button onclick="remH('${h.replace(/'/g,"\\'")}')">حذف</button>
+    </div>`).join('');
+}
+function addH(){
+  const n=document.getElementById('nh').value.trim();
+  if(!n)return;
+  if(db.hospitals.includes(n)){alert('المستشفى موجودة بالفعل');return}
+  db.hospitals.push(n); sv(); rHS(); rHL(); document.getElementById('nh').value=''; updH();
+}
+function remH(name){
+  const c=(db.items[name]||[]).length;
+  if(c>0&&!confirm(`هذه المستشفى فيها ${c} جهاز. هل تريد الحذف مع كل البيانات؟`))return;
+  delete db.items[name]; delete db.beds[name];
+  db.hospitals=db.hospitals.filter(h=>h!==name);
+  sv(); rHS(); rHL(); updH();
+  if(cH===name){cH='';document.getElementById('hsel').value='';selH()}
+}
+
+// ── DEVICES MANAGE ──
+function openDevM(){rDL();document.getElementById('mdev').classList.add('on')}
+function rDL(){
+  document.getElementById('devlist').innerHTML=db.devices.map((d,i)=>`
+    <div class="dev-item">
+      <span>${d.name}</span>
+      <small style="color:var(--teal);font-size:11px">${d.sub}</small>
+      <button onclick="remDev(${i})">حذف</button>
+    </div>`).join('');
+}
+function addDev(){
+  const n=document.getElementById('nd-name').value.trim();
+  const s=document.getElementById('nd-sub').value;
+  if(!n)return;
+  if(db.devices.find(d=>d.name===n)){alert('الجهاز موجود بالفعل');return}
+  db.devices.push({name:n,sub:s}); sv(); rDL(); fillDevSel();
+  document.getElementById('nd-name').value='';
+}
+function remDev(i){
+  if(!confirm('هل تريد حذف هذا الجهاز من القائمة؟'))return;
+  db.devices.splice(i,1); sv(); rDL(); fillDevSel();
+}
+
+// ── EXPORT CSV ──
+function expCSV(){
+  const items=db.items[cH]||[];
+  if(!items.length){alert('لا توجد بيانات');return}
+  let c='\uFEFF'+'اسم الجهاز,التصنيف,القسم,العدد,الحالة,السبب,الموديل,ملاحظات\n';
+  items.forEach(i=>{c+=`"${i.name}","${i.cat}","${i.sub||''}","${i.count}","${i.status}","${i.reason||''}","${i.model||''}","${i.notes||''}"\n`});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([c],{type:'text/csv;charset=utf-8;'}));
+  a.download=`جرد_${cH}.csv`; a.click();
+}
+
+// ── PDF REPORT ──
+function genReport(type){
+  const items=(db.items[cH]||[]).filter(i=>i.status===type);
+  if(!items.length){alert(`لا توجد أجهزة في حالة "${type}" لهذه المستشفى`);return}
+  const beds=db.beds[cH]||{base:0,oper:0};
+  const w=window.open('','_blank');
+  const today=new Date().toLocaleDateString('ar-EG',{year:'numeric',month:'long',day:'numeric'});
+  const col=type==='صيانة'?'#D97706':'#DC2626';
+  const icon=type==='صيانة'?'🔧':'🗑️';
+  const rows=items.map((i,idx)=>`
+    <tr>
+      <td style="text-align:center">${idx+1}</td>
+      <td style="font-weight:700">${i.name}</td>
+      <td>${i.cat==='طبي'?i.sub:'غير طبي'}</td>
+      <td style="text-align:center;font-weight:700">${i.count}</td>
+      <td>${i.model||'—'}</td>
+      <td style="color:${col};font-weight:600">${i.reason||'—'}</td>
+      <td style="color:#64748B">${i.notes||'—'}</td>
+    </tr>`).join('');
+  w.document.write(`<!DOCTYPE html><html lang="ar" dir="rtl"><head>
+    <meta charset="UTF-8"><title>تقرير ${type} - ${cH}</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+      *{box-sizing:border-box;margin:0;padding:0}
+      body{font-family:'Cairo',sans-serif;padding:28px;color:#1E293B;font-size:13px}
+      .hdr{text-align:center;margin-bottom:24px;padding-bottom:18px;border-bottom:3px solid ${col}}
+      .org{font-size:12px;color:#64748B;margin-bottom:10px;line-height:1.8}
+      h1{font-size:20px;font-weight:900;color:${col};margin-bottom:6px}
+      .hosp-name{font-size:16px;font-weight:700;margin:6px 0}
+      .meta{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:12px;color:#64748B;margin-top:10px}
+      .meta span{background:#F8FAFC;padding:4px 12px;border-radius:6px;border:1px solid #E2E8F0}
+      .beds-info{display:flex;gap:16px;justify-content:center;margin-top:10px}
+      .bed-box{background:${col}22;padding:6px 16px;border-radius:8px;font-size:12px;font-weight:700;color:${col}}
+      table{width:100%;border-collapse:collapse;margin-top:16px}
+      th{background:${col};color:white;padding:9px 8px;text-align:right;font-size:12px;font-weight:700}
+      td{padding:8px;border-bottom:1px solid #E2E8F0;font-size:12px;vertical-align:top}
+      tr:nth-child(even){background:#F8FAFC}
+      .footer{text-align:center;margin-top:24px;font-size:11px;color:#94A3B8;border-top:1px solid #E2E8F0;padding-top:12px}
+      @media print{body{padding:15px}}
+    </style></head><body>
+    <div class="hdr">
+      <div class="org">وزارة الصحة والسكان<br>الأمانة العامة للصحة النفسية وعلاج الإدمان<br>إدارة الهندسة الطبية</div>
+      <h1>${icon} تقرير أجهزة ال${type}</h1>
+      <div class="hosp-name">${cH}</div>
+      <div class="meta">
+        <span>📅 ${today}</span>
+        <span>عدد الأجهزة: ${items.length}</span>
+        <span>إجمالي الوحدات: ${items.reduce((s,i)=>s+(parseInt(i.count)||0),0)}</span>
+      </div>
+      ${(beds.base||beds.oper)?`<div class="beds-info">
+        ${beds.base?`<div class="bed-box">🛏️ الأسرة الأساسية: ${beds.base}</div>`:''}
+        ${beds.oper?`<div class="bed-box">🛏️ الأسرة التشغيلية: ${beds.oper}</div>`:''}
+      </div>`:''}
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>اسم الجهاز</th><th>القسم</th><th>العدد</th><th>الموديل</th><th>سبب ال${type}</th><th>ملاحظات</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="footer">تم إنشاء هذا التقرير بتاريخ ${today} — الأمانة العامة للصحة النفسية وعلاج الإدمان</div>
+    <script>window.onload=()=>{setTimeout(()=>window.print(),500)}<\/script>
+    </body></html>`);
+  w.document.close();
+}
+
+// ── MODAL ──
+function closeM(id){document.getElementById(id).classList.remove('on')}
+document.querySelectorAll('.ov').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('on')}));
+
+init();
+</script>
+</body>
+</html>
